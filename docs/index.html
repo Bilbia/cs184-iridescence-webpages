@@ -15,7 +15,7 @@
     font-family: 'Source Sans Pro', sans-serif;
   }
 </style>
-<title>Project4: Cloth Sim</title>
+<title>Final Project Milestone: Iridescence</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -28,9 +28,11 @@
 	<h1 align="middle">Final Project Milestone: Iridescence</h1>	
 	<h3 align="middle">Beatriz Muniz de Castro e Silva 3038745686 (biamcs@berkeley.edu)</h3>
 	<h3 align="middle">Jie Chen 3036845283 (beckychen0921@berkeley.edu)</h3>
-    <h3 align="middle">Jianzhong He 3036960615</h3>
-    <h3 align="middle">Alana Li 3036912864</h3>
-	<h3 align="middle">GitHub Pages: https://https://bilbia.github.io/cs184-iridescence-webpages/</h3>
+    <h3 align="middle">Jianzhong He 3036960615 (hejianzhong@berkeley.edu)</h3>
+    <h3 align="middle">Alana Li 3036912864 (alanali@berkeley.edu)</h3>
+	<h3 align="middle">GitHub Pages: bilbia.github.io/cs184-iridescence-webpages/</h3>
+    <h3 align="middle">Slides: https://docs.google.com/presentation/d/124Hczu9BzxsggrbZL7nkE4xYfxc9Dk5OjnIzePhn0WM/edit?usp=sharing</h3>
+    <h3 align="middle">Video: https://youtu.be/4xtt-G8HOok</h3>
 
 	
 	<br><br>
@@ -99,6 +101,52 @@
 		  </tr>
 		</table>
 	</div>
+
+    <h3>Last minute update</h3>
+
+    <p>By examining the dae files of the renders above, we noticed that in each of the super-colored objects, the eta value for the respective wavelength of
+        the oversaturated color was significantly lower than the others. By changing those values so they matched each other more closely, we were able to
+        render more accurate images. The sphere below originally had eta values of around 1.3 1.0 0.6. By changing the last value to 1.6 instead, the render
+        looks as follows. However, we noticed that when setting these values to all match at 1.3, the render looks all black with no perceptible iridescence. 
+        When we attempted to modify the dragon's values in a similar way to 1.2 for all wavelengths, the render seemed quite matte with no shine, although that
+        happens with any rendering of the dragon, regardless of eta values, and we have no idea why it is behaving like this. Adjusting these values for the 
+        bunny also seemed to significantly improve the renders.
+    </p>
+
+    <div align="middle">
+		<table style="width=100%">
+		  <tr>
+			<td>
+			  <img src="img/irid4.png" align="middle" width="500px"/>
+			  <figcaption align="middle">Render of CBspheres_microfacet_al_ag with B eta value adjusted to 1.6</figcaption>
+			</td>
+			<td>
+			  <img src="img/irid5.png" align="middle" width="500px"/>
+			  <figcaption align="middle">Render of CBspheres_microfacet_al_ag with all eta values adjusted to 1.3</figcaption>
+			</td>
+		  </tr>
+		  <br>
+		  <tr>
+		  <td>
+			<img src="img/irid6.png" align="middle" width="500px"/>
+			<figcaption align="middle">Render of CBdragon_microfacet_au with all eta values adjusted to 1.2</figcaption>
+		  </td>
+		  <td>
+			<img src="img/irid7.png" align="middle" width="500px"/>
+			<figcaption align="middle">Render of CBbunny_microfacet_cu with R eta value adjusted to 1.3</figcaption>
+		  </td>
+		  </tr>
+		</table>
+	</div>
+
+    <p>We were worried that the iridescence effect we see on the bunny could be simply a reflection of the red and blue walls, so we also decided to test
+        rendering bunny_microfracet_cu.dae, and the results look promising.
+    </p>
+
+    <div align="middle">
+        <img src="img/irid8.png" align="middle" width="500px"/>
+        <figcaption align="middle">Render of bunny_microfracet_cu with adjusted R eta value</figcaption>
+    </div>
 	
 	<p align="middle">
 	  ============================================================================================

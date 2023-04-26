@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>Project4: Cloth Sim</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+	<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2023</h1>
+	<h1 align="middle">Final Project Milestone: Iridescence</h1>	
+	<h3 align="middle">Beatriz Muniz de Castro e Silva 3038745686 (biamcs@berkeley.edu)</h3>
+	<h3 align="middle">Jie Chen 3036845283 (beckychen0921@berkeley.edu)</h3>
+    <h3 align="middle">Jianzhong He 3036960615</h3>
+    <h3 align="middle">Alana Li 3036912864</h3>
+	<h3 align="middle">GitHub Pages: https://https://bilbia.github.io/cs184-iridescence-webpages/</h3>
+
+	
+	<br><br>
+
+	
+	<p align="middle">
+	  ============================================================================================
+	</p>
+	
+	<h2 align="middle">Overview</h2>
+
+    <p>In this project, we are attempting to implement the effects of iridescence due to the wave of nature of light. As a base for our code, we utilized
+        our project 3-2's code, more specifically part 2: microfacet materials. Our goal is to make a material that simulates a thin layer on top of the object
+        that not only directly reflects light, but also allows for ray to permeate it and bounce within it before being reflected. These waves interfere with 
+        each other both constructively and destructively, causing changes in the color reflected that lead to the rainbow effect we see in iridescent objects.
+    </p>
+
+	<h2 align="middle">Implementation and problems</h2>
+
+    <p>Through our research, we discovered that iridescence is commonly implemented from a microfacet BRDF base code by modifying the Fresnel term of the 
+        equation. Since we implement microfacets during project 3-2, we decided to use that code as a base for our implementation. However, since neither
+        pairs that make up our group implemented that part of the project for the submission, we started off our project by going back to project 3-2's spec
+        and implementing microfacets from scratch. Thankfully, it was relatively simple to implement, and so we were able to start developement of iridescence.
+    </p>
+
+    <p>We based our implementation of iridescence on past work done on this course, more specifically https://sydnie-shea.github.io/iridescentFinal/ and 
+        https://kwsong.github.io/cs184_final/final.html, which already contain a lot of the mathematical formulas that we use in our code. Since iridescence is 
+        wavelength-dependent, we calculated the output of the R, G and B channels separately and added them together for the final output. As stated in the 
+        microfacet spec, the accurate way would be to account for all wavelengths of light, but for simplification we will only be sampling these three channels.
+    </p>
+
+    <p>As stated before, thin film materials reflect light directly, but some of the rays end up permeating the material and bouncing within it before being
+        reflected. This means that we have to take more materials into account and their respective refraction indexes, more specifically air, the thin film,
+        and the object's base material. Since there is refraction involved, we also had to determine the refraction angles from when the ray permeates the 
+        thin film, and the angles they leave the material and are reflected back to the scene. We then used Fresnel equations to determine the transmission 
+        and reflected amplitudes of both spectral and polarized light, which are later combined in the final output. We also had to calculate the phase changes
+        of the wavelengths, since they interfere with each other. Once we have the amplitudes and phase changes of each wavelength, we are able to calculate an
+        estimate of the total transmitted intensity and finally, the final reflectance.
+    </p>
+
+    <p>While we followed the formulas as best as we could, we still have not been able to properly implement iridescence, although we believe we are close. 
+        The images below show our current progress. As you can see, the output images look oversaturated, looking either too red, green or blue. We are not completely 
+        sure what has lead to these results, but we believe it may have something to do with either the eta and k values of the microfacet material of the 
+        dae files and how we account for them in our calculations or some error related to our calculations of incoming and outcoming angles. We are currently 
+        focused on debbuging and looking at other implementations of iridescence in order to figure out what could be wrong in our code. 
+    </p>
+
+    <div align="middle">
+		<table style="width=100%">
+		  <tr>
+			<td>
+			  <img src="img/irid1.png" align="middle" width="500px"/>
+			  <figcaption align="middle">Render of CBdragon_microfacet_au</figcaption>
+			</td>
+			<td>
+			  <img src="img/irid2.png" align="middle" width="500px"/>
+			  <figcaption align="middle">Render of CBbunny_microfacet_cu</figcaption>
+			</td>
+		  </tr>
+		  <br>
+		  <tr>
+		  <td>
+			<img src="img/irid3.png" align="middle" width="500px"/>
+			<figcaption align="middle">Render of CBspheres_microfacet_al_ag</figcaption>
+		  </td>
+		  </tr>
+		</table>
+	</div>
+	
+	<p align="middle">
+	  ============================================================================================
+	</p>
+	
+	</body>
+	</html>
